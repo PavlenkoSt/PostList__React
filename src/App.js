@@ -1,7 +1,7 @@
 import { useState } from "react"
 import PostList from "./components/PostList"
 import Filter from "./components/Filter"
-import { useSort } from "./hooks/useFilter"
+import { useSortAndSearch } from "./hooks/useFilter"
 
 
 const App = () => {
@@ -11,14 +11,17 @@ const App = () => {
         { id: 2, title: 'w Kotlin', description: 'Kotlin the best!' }
     ])
 
-    const { sortedPosts, setSort } = useSort(posts)
+    const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
     return (
         <>
             <Filter 
                 setSort={setSort}
+                setQuery={setQuery}
+                query={query}
+                sortVal={sortVal}
             />
-            <PostList posts={sortedPosts} />
+            <PostList posts={sortedAndQuered} />
         </>
     )
 }
