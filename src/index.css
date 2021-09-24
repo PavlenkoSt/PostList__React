@@ -78,7 +78,7 @@ code {
   max-width: 300px;
   border: 2px solid teal;
   color: #333;
-  font-size: 18px;
+  font-size: 16px;
   padding: 5px 10px;
   color: teal;
 }
@@ -87,5 +87,7 @@ code {
   width: 100%;
   max-width: 300px;
   margin-bottom: 10px;
-  padding: 5px 10px;
+  padding: 5px;
+  font-size: 16px;
+  border: 2px solid teal;
 }

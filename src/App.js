@@ -13,6 +13,8 @@ const App = () => {
 
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
+    const deletePost = (id) => setPosts(posts.filter(post => post.id !== id))
+
     return (
         <>
             <Filter 
@@ -21,7 +23,10 @@ const App = () => {
                 query={query}
                 sortVal={sortVal}
             />
-            <PostList posts={sortedAndQuered} />
+            <PostList 
+                posts={sortedAndQuered} 
+                deletePost={deletePost}
+            />
         </>
     )
 }

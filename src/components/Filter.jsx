@@ -17,7 +17,7 @@ const Filter = ({ setSort, sortVal, setQuery, query }) => {
                 value={ query } 
                 onChange={ inputChange } 
                 className='searchInput'
-                placeholder='search'
+                placeholder='Search'
             />
         </div>
     )
