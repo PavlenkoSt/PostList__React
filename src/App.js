@@ -3,6 +3,7 @@ import PostList from "./components/PostList"
 import Filter from "./components/Filter"
 import { useSortAndSearch } from "./hooks/useFilter"
 import Modal from "./components/Modal"
+import Form from "./components/Form"
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
     const deletePost = (id) => setPosts(posts.filter(post => post.id !== id))
+    const addPost = (newPost) => setPosts([ ...posts, newPost ])
 
     return (
         <>
@@ -30,13 +32,17 @@ const App = () => {
                 posts={sortedAndQuered} 
                 deletePost={deletePost}
             />
-            <Modal showModal={ showModal } setShowModal={ setShowModal } >
-                123
-            </Modal>
             <button 
                 className='btn addPostBtn'
                 onClick={ () => setShowModal(true) }
             >Add new post</button>
+
+            <Modal showModal={ showModal } setShowModal={ setShowModal } >
+                <Form 
+                    addPost={ addPost }
+                    setShowModal={ setShowModal }
+                />
+            </Modal>
         </>
     )
 }
