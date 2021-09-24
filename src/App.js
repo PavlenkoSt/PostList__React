@@ -2,6 +2,7 @@ import { useState } from "react"
 import PostList from "./components/PostList"
 import Filter from "./components/Filter"
 import { useSortAndSearch } from "./hooks/useFilter"
+import Modal from "./components/Modal"
 
 
 const App = () => {
@@ -10,6 +11,8 @@ const App = () => {
         { id: 1, title: 'z Java', description: 'Java the best!' },
         { id: 2, title: 'w Kotlin', description: 'Kotlin the best!' }
     ])
+
+    const [ showModal, setShowModal ] = useState(false)
 
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
@@ -27,6 +30,13 @@ const App = () => {
                 posts={sortedAndQuered} 
                 deletePost={deletePost}
             />
+            <Modal showModal={ showModal } setShowModal={ setShowModal } >
+                123
+            </Modal>
+            <button 
+                className='btn addPostBtn'
+                onClick={ () => setShowModal(true) }
+            >Add new post</button>
         </>
     )
 }
