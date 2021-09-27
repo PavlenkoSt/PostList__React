@@ -1,21 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PostList from "./components/PostList"
 import Filter from "./components/Filter"
 import { useSortAndSearch } from "./hooks/useFilter"
 import Modal from "./components/Modal"
 import Form from "./components/Form"
+import { useFetch } from "./hooks/useFetch"
+import postsApi from "./api/postsAPI"
 
 
 const App = () => {
-    const [ posts, setPosts ] = useState([
-        { id: 0, title: 'a Javascript', body: 'JS the best!' },
-        { id: 1, title: 'z Java', body: 'Java the best!' },
-        { id: 2, title: 'w Kotlin', body: 'Kotlin the best!' }
-    ])
+    const [ posts, setPosts ] = useState([])
 
     const [ showModal, setShowModal ] = useState(false)
 
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
+
+    const { fetching, isLoading, error } = useFetch( async () => {
+        const posts = await postsApi.getAll()
+        setPosts(posts)
+    })
+
+    useEffect(() => {
+        fetching()
+    }, [])
 
     const deletePost = (id) => setPosts(posts.filter(post => post.id !== id))
     const addPost = (newPost) => setPosts([ ...posts, newPost ])
@@ -28,10 +35,14 @@ const App = () => {
                 query={query}
                 sortVal={sortVal}
             />
-            <PostList 
-                posts={sortedAndQuered} 
-                deletePost={deletePost}
-            />
+            { error && <h2 className='title'>{ error }</h2> }
+            { isLoading 
+                ? <h2 className='title'>Loading...</h2>
+                : <PostList 
+                    posts={sortedAndQuered} 
+                    deletePost={deletePost}
+                />
+            }
             <button 
                 className='btn addPostBtn'
                 onClick={ () => setShowModal(true) }
