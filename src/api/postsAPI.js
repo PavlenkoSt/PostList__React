@@ -1,9 +1,14 @@
 import axios from "axios"
 
 const postsAPI = {
-    async getAll(){
-        const responce = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
-        return responce.data
+    async getAll(limit = 10, portion = 1){
+        const responce = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+                _limit: limit,
+                _page: portion
+            }
+        })
+        return responce
     }
 }
 

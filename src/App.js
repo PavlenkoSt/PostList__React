@@ -6,6 +6,7 @@ import Modal from "./components/Modal"
 import Form from "./components/Form"
 import { useFetch } from "./hooks/useFetch"
 import postsApi from "./api/postsAPI"
+import usePagination from "./hooks/usePagination"
 
 
 const App = () => {
@@ -15,14 +16,17 @@ const App = () => {
 
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
+    const { pagination, currentPortion, setTotalCount, limit } = usePagination()
+
     const { fetching, isLoading, error } = useFetch( async () => {
-        const posts = await postsApi.getAll()
-        setPosts(posts)
+        const posts = await postsApi.getAll(limit, currentPortion)
+        setPosts(posts.data)
+        setTotalCount(posts.headers['x-total-count'])
     })
 
     useEffect(() => {
         fetching()
-    }, [])
+    }, [currentPortion])
 
     const deletePost = (id) => setPosts(posts.filter(post => post.id !== id))
     const addPost = (newPost) => setPosts([ ...posts, newPost ])
@@ -43,6 +47,7 @@ const App = () => {
                     deletePost={deletePost}
                 />
             }
+            { pagination }
             <button 
                 className='btn addPostBtn'
                 onClick={ () => setShowModal(true) }
