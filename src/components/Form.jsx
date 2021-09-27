@@ -3,11 +3,11 @@ import { useState } from 'react/cjs/react.development'
 
 const Form = ({ addPost, setShowModal }) => {
 
-    const [ formPost, setFormPost ] = useState({ title: '', description: '' })
+    const [ formPost, setFormPost ] = useState({ title: '', body: '' })
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(formPost.title || formPost.description){
+        if(formPost.title || formPost.body){
             addPost({ ...formPost, id: Date.now() })
             setShowModal(false)
         }
@@ -25,10 +25,10 @@ const Form = ({ addPost, setShowModal }) => {
             />
             <input 
                 type='text' 
-                value={ formPost.description }
-                onChange={ (e) => setFormPost({ ...formPost, description: e.target.value }) }
+                value={ formPost.body }
+                onChange={ (e) => setFormPost({ ...formPost, body: e.target.value }) }
                 className='formInput'
-                placeholder='Description'
+                placeholder='Body'
             />
             <button 
                 className='btn formBtn'

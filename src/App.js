@@ -8,9 +8,9 @@ import Form from "./components/Form"
 
 const App = () => {
     const [ posts, setPosts ] = useState([
-        { id: 0, title: 'a Javascript', description: 'JS the best!' },
-        { id: 1, title: 'z Java', description: 'Java the best!' },
-        { id: 2, title: 'w Kotlin', description: 'Kotlin the best!' }
+        { id: 0, title: 'a Javascript', body: 'JS the best!' },
+        { id: 1, title: 'z Java', body: 'Java the best!' },
+        { id: 2, title: 'w Kotlin', body: 'Kotlin the best!' }
     ])
 
     const [ showModal, setShowModal ] = useState(false)

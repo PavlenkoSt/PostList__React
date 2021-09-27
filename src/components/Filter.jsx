@@ -10,7 +10,7 @@ const Filter = ({ setSort, sortVal, setQuery, query }) => {
             <select onChange={ selectChange } value={ sortVal } className='sortSelect' >
                 <option defaultValue defaultChecked value=''>Sort</option>
                 <option value='title'>Sort by title</option>
-                <option value='description'>Sort by description</option>
+                <option value='body'>Sort by body</option>
             </select>
             <input 
                 type='text' 
