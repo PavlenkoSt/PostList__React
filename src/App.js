@@ -18,14 +18,14 @@ const App = () => {
 
     const { pagination, currentPortion, setTotalCount, limit } = usePagination()
 
-    const { fetching, isLoading, error } = useFetch( async () => {
+    const [ fetchPosts, isLoading, fetchError ] = useFetch( async () => {
         const posts = await postsApi.getAll(limit, currentPortion)
         setPosts(posts.data)
         setTotalCount(posts.headers['x-total-count'])
     })
 
     useEffect(() => {
-        fetching()
+        fetchPosts()
     }, [currentPortion])
 
     const deletePost = (id) => setPosts(posts.filter(post => post.id !== id))
@@ -39,7 +39,7 @@ const App = () => {
                 query={query}
                 sortVal={sortVal}
             />
-            { error && <h2 className='title'>{ error }</h2> }
+            { fetchError && <h2 className='title'>{ fetchError }</h2> }
             { isLoading 
                 ? <h2 className='title'>Loading...</h2>
                 : <PostList 

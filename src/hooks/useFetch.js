@@ -15,5 +15,5 @@ export const useFetch = (callback) => {
         }
     }
 
-    return { fetching, isLoading, error }
+    return [ fetching, isLoading, error ]
 }
