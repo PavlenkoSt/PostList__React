@@ -5,16 +5,17 @@ import { AuthContext } from './context'
 const App = () => {
 
     const [ authStatus, setAuthStatus ] = useState(false)
+    const [ loadingStatus, setLoadingStatus ] = useState(true)
 
     useEffect(() => {
-        const auth = localStorage.getItem('auth')
-        if(auth){
+        if(localStorage.getItem('auth')){
             setAuthStatus(true)
         }
+        setLoadingStatus(false)
     }, [])
 
     return (
-        <AuthContext.Provider value={{ authStatus, setAuthStatus }}>
+        <AuthContext.Provider value={{ authStatus, setAuthStatus, loadingStatus }}>
             <AppRouter/>
         </AuthContext.Provider>
     )

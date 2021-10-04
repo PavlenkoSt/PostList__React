@@ -7,7 +7,11 @@ import Navbar from './Navbar'
 
 const AppRouter = () => {
 
-    const { authStatus } = useContext(AuthContext)
+    const { authStatus, loadingStatus } = useContext(AuthContext)
+
+    if(loadingStatus){
+        return <h2 className='title'>Loading...</h2>
+    }
 
     if(!authStatus){
         return (
