@@ -6,6 +6,11 @@ const Login = () => {
 
     const { setAuthStatus } = useContext(AuthContext)
 
+    const login = () => {
+        setAuthStatus(true)
+        localStorage.setItem('auth', 'true')
+    }
+
     return (
         <form className='form login' >
             <h2 className='title'>Login</h2>
@@ -21,7 +26,7 @@ const Login = () => {
             />
             <button 
                 className='btn formBtn'
-                onClick={ () => setAuthStatus(true) } 
+                onClick={ login } 
             >Login</button>  
         </form>
     )
