@@ -1,17 +1,17 @@
 import React from 'react'
-import { Route, Switch } from 'react-router'
-import Post from './pages/Post'
-import PostsList from './pages/PostsList'
+import { Redirect, Route, Switch } from 'react-router'
+import router from './router'
 
 const App = () => {
     return (
         <Switch>
-            <Route path='/post/:id'>
-                <Post/>
-            </Route>
-            <Route path='/' exact>
-                <PostsList/>
-            </Route>
+            { router.map(route => (
+                <Route path={ route.link } exact={ route.exact } >
+                    { route.component() }
+                </Route>
+            )) }
+            
+            <Redirect to='/'/>
         </Switch>
     )
 }

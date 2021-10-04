@@ -8,7 +8,8 @@ import { useFetch } from '../hooks/useFetch'
 import { useSortAndSearch } from '../hooks/useFilter'
 import usePagination from '../hooks/usePagination'
 
-const PostsList = () => {
+const Home = () => {
+
     const [ posts, setPosts ] = useState([])
 
     const [ showModal, setShowModal ] = useState(false)
@@ -31,7 +32,7 @@ const PostsList = () => {
     const addPost = (newPost) => setPosts([ ...posts, newPost ])
 
     return (
-        <>
+        <div>
             <Filter 
                 setSort={setSort}
                 setQuery={setQuery}
@@ -58,8 +59,8 @@ const PostsList = () => {
                     setShowModal={ setShowModal }
                 />
             </Modal>
-        </>
+        </div>
     )
 }
 
-export default PostsList
+export default Home
