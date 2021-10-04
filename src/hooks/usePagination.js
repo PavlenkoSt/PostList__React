@@ -30,7 +30,7 @@ const usePagination = () => {
 
     }, [totalCount, limit, currentPortion])
 
-    return { pagination, currentPortion, limit, setLimit, setTotalCount }
+    return { pagination, currentPortion, limit, setLimit, setTotalCount, setCurrentPortion, totalCount }
 }
 
 export default usePagination

@@ -10,7 +10,7 @@ const PostList = ({ posts, deletePost }) => {
     return (
         <div className='postList'>
             <h2 className='title'>Post List</h2>
-            { posts.map(post => <PostItem post={ post } key={ post.id } deletePost={ deletePost } />) }
+            { posts.map(post => <PostItem post={ post } key={ post.id } deletePost={ deletePost } id={ post.id } />) }
         </div>
     )
 }

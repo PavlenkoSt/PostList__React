@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import postsAPI from '../api/postsAPI'
 import Filter from '../components/Filter'
 import Form from '../components/Form'
@@ -16,13 +16,30 @@ const Home = () => {
 
     const { sortedAndQuered, setQuery, setSort, query, sortVal } = useSortAndSearch(posts)
 
-    const { pagination, currentPortion, setTotalCount, limit } = usePagination()
+    const { pagination, currentPortion, setTotalCount, limit, setCurrentPortion, totalCount } = usePagination()
 
     const [ fetchPosts, isLoading, fetchError ] = useFetch( async () => {
-        const posts = await postsAPI.getAll(limit, currentPortion)
-        setPosts(posts.data)
-        setTotalCount(posts.headers['x-total-count'])
+        const fetchedPosts = await postsAPI.getAll(limit, currentPortion)
+        setPosts([...posts, ...fetchedPosts.data])
+        setTotalCount(fetchedPosts.headers['x-total-count'])
     })
+
+    const lastElement = useRef()
+    const observer = useRef()
+
+    useEffect(() => {
+        if(isLoading) return
+
+        if(observer.current) observer.current.disconnect()
+
+        const callback = async (entries, observer) => {
+            if(entries[0].isIntersecting && currentPortion < totalCount){
+                setCurrentPortion(currentPortion + 1)
+            }  
+        }
+        observer.current = new IntersectionObserver(callback)
+        observer.current.observe(lastElement.current)
+    }, [ isLoading ])
 
     useEffect(() => {
         fetchPosts()
@@ -40,13 +57,12 @@ const Home = () => {
                 sortVal={sortVal}
             />
             { fetchError && <h2 className='title'>{ fetchError }</h2> }
-            { isLoading 
-                ? <h2 className='title'>Loading...</h2>
-                : <PostList 
-                    posts={sortedAndQuered} 
-                    deletePost={deletePost}
-                />
-            }
+            { isLoading && <h2 className='title'>Loading...</h2> }
+            <PostList 
+                posts={sortedAndQuered} 
+                deletePost={deletePost}
+            />
+            <div ref={ lastElement } />
             { pagination }
             <button 
                 className='btn addPostBtn'
