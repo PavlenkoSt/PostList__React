@@ -1,18 +1,15 @@
-import React from 'react'
-import { Redirect, Route, Switch } from 'react-router'
-import router from './router'
+import React, { useState } from 'react'
+import AppRouter from './components/AppRouter'
+import { AuthContext } from './context'
 
 const App = () => {
+
+    const [ authStatus, setAuthStatus ] = useState(false)
+
     return (
-        <Switch>
-            { router.map(route => (
-                <Route path={ route.link } exact={ route.exact } >
-                    { route.component() }
-                </Route>
-            )) }
-            
-            <Redirect to='/'/>
-        </Switch>
+        <AuthContext.Provider value={{ authStatus, setAuthStatus }}>
+            <AppRouter/>
+        </AuthContext.Provider>
     )
 }
 
