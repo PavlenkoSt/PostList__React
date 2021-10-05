@@ -9,6 +9,14 @@ const postsAPI = {
             }
         })
         return responce
+    },
+    async getOne(id){
+        const responce = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        return responce
+    },
+    async getComments(id){
+        const responce = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
+        return responce
     }
 }
 

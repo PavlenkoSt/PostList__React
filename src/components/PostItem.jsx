@@ -1,8 +1,17 @@
 import React from 'react'
+import { useHistory } from 'react-router'
 
 const PostItem = ({ post, deletePost, id }) => {
+
+    const deleteHandler = (e) => {
+        e.stopPropagation()
+        deletePost(post.id)
+    }
+
+    const history = useHistory()
+
     return (
-        <div className='post'>
+        <div className='post' onClick={ () => history.push(`/post/${id}`) } >
             <div className='postInfo'>
                 <div>
                     <div>{ id }</div>
@@ -10,7 +19,7 @@ const PostItem = ({ post, deletePost, id }) => {
                 </div>
                 <div>{ post.body }</div>
             </div>
-            <button onClick={() => deletePost(post.id)} className='btn'>Delete</button>
+            <button onClick={ deleteHandler } className='btn del-btn'>Delete</button>
         </div>
     )
 }
