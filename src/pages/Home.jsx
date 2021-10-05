@@ -6,6 +6,7 @@ import Modal from '../components/Modal'
 import PostList from '../components/PostList'
 import { useFetch } from '../hooks/useFetch'
 import { useSortAndSearch } from '../hooks/useFilter'
+import useObserver from '../hooks/useObserver'
 import usePagination from '../hooks/usePagination'
 
 const Home = () => {
@@ -25,21 +26,8 @@ const Home = () => {
     })
 
     const lastElement = useRef()
-    const observer = useRef()
 
-    useEffect(() => {
-        if(isLoading) return
-
-        if(observer.current) observer.current.disconnect()
-
-        const callback = async (entries, observer) => {
-            if(entries[0].isIntersecting && currentPortion < totalCount){
-                setCurrentPortion(currentPortion + 1)
-            }  
-        }
-        observer.current = new IntersectionObserver(callback)
-        observer.current.observe(lastElement.current)
-    }, [ isLoading ])
+    useObserver(lastElement, isLoading, currentPortion < totalCount, () => setCurrentPortion(currentPortion + 1))
 
     useEffect(() => {
         fetchPosts()
